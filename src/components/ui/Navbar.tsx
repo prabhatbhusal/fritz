@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DropdownMenu from "./Dropdown";
-import { RiArrowDownSLine } from "@remixicon/react";
+
 
 const Navbar = () => {
   const links = [
@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="flex justify-between  items-center font-bold">
         <div>
         <Link href="/">
-          <Image src="/Fritz.png" alt="logo" width={100} height={100} />
+          <Image src="/Fritz.png" alt="logo" width={200} height={200} />
         </Link>
         </div>
         <div className='flex flex-row justify-between items-center gap-10'>
@@ -41,7 +41,7 @@ const Navbar = () => {
         </div>
 
       </div>
-      <DropdownMenu/>
+
     </div>
   );
 };
