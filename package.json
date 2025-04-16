@@ -12,6 +12,7 @@
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@radix-ui/react-accordion": "^1.2.4",
+    "@radix-ui/react-navigation-menu": "^1.2.6",
     "@radix-ui/react-slot": "^1.2.0",
     "@remixicon/react": "^4.6.0",
     "class-variance-authority": "^0.7.1",
