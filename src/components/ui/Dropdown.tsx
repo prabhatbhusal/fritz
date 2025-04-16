@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PiOvenBold } from "react-icons/pi";
 import { RiGasStationFill, RiHome3Fill, RiHotelFill } from "@remixicon/react";
 import { GiWashingMachine } from "react-icons/gi";
@@ -19,6 +19,23 @@ import { RiArrowDownSLine } from "react-icons/ri";
 const DropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<"Residential" | "Commercial" | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  // Check if we're in a mobile viewport - use 768px as breakpoint to match md: in Tailwind
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkIfMobile();
+
+    // Add event listener
+    window.addEventListener('resize', checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const residentialLinks = [
     {
@@ -73,11 +90,49 @@ const DropdownMenu: React.FC = () => {
     return allLinks;
   };
 
+  // Modified to always toggle dropdown on click, regardless of device
+  const handleToggleDropdown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setIsOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setIsOpen(false);
+      setSelectedCategory(null);
+    }
+  };
+
+  // Handle clicks outside to close the dropdown on mobile
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const dropdown = document.getElementById('dropdown-container');
+
+      if (dropdown && !dropdown.contains(target) && isMobile && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobile, isOpen]);
+
   return (
-    <div className="relative inline-block text-left">
+    <div id="dropdown-container" className="relative inline-block text-left">
       <div
-        className="flex items-center cursor-pointer px-4 text-gray-700 hover:bg-gray-100 rounded-md"
-        onMouseEnter={() => setIsOpen(true)}
+        className="flex items-center cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+        onClick={handleToggleDropdown}
+        onMouseEnter={handleMouseEnter}
       >
         <span>Services</span>
         <RiArrowDownSLine
@@ -88,15 +143,12 @@ const DropdownMenu: React.FC = () => {
       </div>
       {isOpen && (
         <div
-          className="flex flex-col absolute mt-4 w-280 bg-white border border-gray-200 rounded-md shadow-lg z-100 left-[-500px]"
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={() => {
-            setIsOpen(false);
-            setSelectedCategory(null);
-          }}
+          className="flex flex-col absolute mt-4 w-280 justify-center bg-white border border-gray-200 rounded-md shadow-lg z-50 left-0 md:left-[-500px]"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
-          <div className="flex flex-row">
-            <div className="relative p-5 h-120 w-full lg:w-[35%] rounded overflow-hidden">
+          <div className="flex flex-col md:flex-row">
+            <div className="relative p-3 h-full w-full md:w-[35%] rounded overflow-hidden">
               <div className="px-2">
                 <h1 className="text-2xl p-2 sm:text-3xl text-slate-900 font-bold">Services</h1>
                 <Accordion type="single" collapsible>
@@ -129,12 +181,12 @@ const DropdownMenu: React.FC = () => {
                 </Accordion>
               </div>
             </div>
-            <div className="w-[75%] px-10">
-              <div className="p-5 grid grid-cols-2 text-2xl mt-10 gap-5 sm:text-xl cursor-pointer font-bold border-1 bg-indigo-200 rounded-sm">
+            <div className="w-full md:w-[65%] px-4 md:px-10">
+              <div className="p-3 md:p-5 grid grid-cols-1 md:grid-cols-2 text-xl md:text-2xl mt-5 md:mt-10 gap-3 md:gap-5 sm:text-xl cursor-pointer font-bold border-1 bg-indigo-200 rounded-sm">
                 {getCurrentLinks().map((link, idx) => (
                   <div
                     key={idx}
-                    className="hover:text-indigo-500 mt-5 flex font-bold text-[17px] sm:text-md hover:underline gap-2"
+                    className="hover:text-indigo-500 mt-3 md:mt-5 flex font-bold text-sm md:text-md hover:underline gap-2"
                   >
                     <span className="bg-gray-300 rounded p-1">{link.img}</span>
                     {link.title}
@@ -143,13 +195,13 @@ const DropdownMenu: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="p-10">
-            <div className="w-full p-10 text-white bg-indigo-900 rounded-2xl flex items-center justify-between">
-              <h1 className="text-3xl">
+          <div className="p-4 md:p-10">
+            <div className="w-full p-4 md:p-10 text-white bg-indigo-900 rounded-2xl flex flex-col md:flex-row items-center justify-between">
+              <h1 className="text-xl md:text-3xl text-center md:text-left mb-4 md:mb-0">
                 <b>Let's talk </b>Explore Our Business Calling
               </h1>
               <Link
-                className="mt-4 bg-red-500 text-white px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition inline-block"
+                className="bg-red-500 text-white px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition inline-block"
                 href="/appointment"
               >
                 Book a Service
