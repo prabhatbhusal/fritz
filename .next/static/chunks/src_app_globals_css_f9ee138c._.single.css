@@ -1948,6 +1948,12 @@
   }
 
   @media (width >= 48rem) {
+    .md\:ml-\[-500px\] {
+      margin-left: -500px;
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:block {
       display: block;
     }

@@ -8,17 +8,16 @@ import { BiFridge } from "react-icons/bi";
 import { MdOutlineCoffeeMaker, MdSevereCold } from "react-icons/md";
 import Icon from "@mdi/react";
 import { mdiDishwasher } from "@mdi/js";
-import {
-  Accordion,
-  AccordionItem,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionItem } from "@/components/ui/accordion";
 import { Airplay } from "lucide-react";
 import Link from "next/link";
 import { RiArrowDownSLine } from "react-icons/ri";
 
 const DropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<"Residential" | "Commercial" | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<
+    "Residential" | "Commercial" | null
+  >(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [linksToShow, setLinksToShow] = useState<any[]>([]);
 
@@ -32,10 +31,10 @@ const DropdownMenu: React.FC = () => {
     checkIfMobile();
 
     // Add event listener
-    window.addEventListener('resize', checkIfMobile);
+    window.addEventListener("resize", checkIfMobile);
 
     // Cleanup
-    return () => window.removeEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   const residentialLinks = [
@@ -80,7 +79,7 @@ const DropdownMenu: React.FC = () => {
     ...residentialLinks,
     ...commercialLinks,
     {
-      title: <Link href='/GetFeatures'> All features {'>>'} </Link>,
+      title: <Link href="/GetFeatures"> All features {">>"} </Link>,
       img: <MdOutlineCoffeeMaker color="white" size={22} />,
     },
   ];
@@ -129,13 +128,15 @@ const DropdownMenu: React.FC = () => {
 
   // Handle category selection - works the same on mobile and desktop
   const handleCategorySelect = (category: "Residential" | "Commercial") => {
-    // If we're clicking the same category that's already selected, show all links
+    // Toggle category if already selected, otherwise select new category
     if (selectedCategory === category) {
       setSelectedCategory(null);
       setLinksToShow(allLinks);
     } else {
       setSelectedCategory(category);
-      setLinksToShow(category === "Residential" ? residentialLinks : commercialLinks);
+      setLinksToShow(
+        category === "Residential" ? residentialLinks : commercialLinks
+      );
     }
   };
 
@@ -143,16 +144,16 @@ const DropdownMenu: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      const dropdown = document.getElementById('dropdown-container');
+      const dropdown = document.getElementById("dropdown-container");
 
       if (dropdown && !dropdown.contains(target) && isMobile && isOpen) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMobile, isOpen]);
 
@@ -185,39 +186,41 @@ const DropdownMenu: React.FC = () => {
           <div className="flex flex-col md:flex-row">
             <div className="relative p-3 h-full w-full md:w-[35%] rounded overflow-hidden">
               <div className="px-2">
-                <h1 className="text-2xl p-2 sm:text-3xl text-slate-900 font-bold">Services</h1>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <div
-                      className={`flex items-center p-5 text-lg sm:text-xl cursor-pointer font-bold border-1 rounded-sm px-5 mt-5 ${
-                        selectedCategory === "Residential" ? "bg-indigo-100" : ""
-                      }`}
-                      onClick={() => handleCategorySelect("Residential")}
-                    >
-                      <span className="flex items-center gap-5 rounded p-1">
-                        <RiHome3Fill color="gray" />
-                        Residential
-                      </span>
-                    </div>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <div
-                      className={`flex items-center p-5 text-lg sm:text-xl cursor-pointer font-bold border-1 rounded-sm px-5 mt-5 ${
-                        selectedCategory === "Commercial" ? "bg-indigo-100" : ""
-                      }`}
-                      onClick={() => handleCategorySelect("Commercial")}
-                    >
-                      <span className="flex items-center gap-5 rounded p-1">
-                        <RiHotelFill className="text-gray" color="gray" />
-                        Commercial
-                      </span>
-                    </div>
-                  </AccordionItem>
-                </Accordion>
+                <h1 className="text-2xl p-2 sm:text-3xl text-slate-900 font-bold">
+                  Services
+                </h1>
+
+                <div
+                  className={`flex items-center p-5 text-lg sm:text-xl cursor-pointer font-bold border-1 rounded-sm px-5 mt-5 ${
+                    selectedCategory === "Residential" ? "bg-indigo-100" : ""
+                  }`}
+                  onClick={() => handleCategorySelect("Residential")}
+                >
+                  <span className="flex items-center gap-5 rounded p-1">
+                    <RiHome3Fill color="gray" />
+                    Residential
+                  </span>
+                </div>
+
+                <div
+                  className={`flex items-center p-5 text-lg sm:text-xl cursor-pointer font-bold border-1 rounded-sm px-5 mt-5 ${
+                    selectedCategory === "Commercial" ? "bg-indigo-100" : ""
+                  }`}
+                  onClick={() => handleCategorySelect("Commercial")}
+                >
+                  <span className="flex items-center gap-5 rounded p-1">
+                    <RiHotelFill className="text-gray" color="gray" />
+                    Commercial
+                  </span>
+                </div>
               </div>
             </div>
+            {/* Fixed the links container positioning for mobile */}
             <div className="w-full md:w-[65%] px-4 md:px-10">
-              <div id="links-container" className="p-3 md:p-5 grid grid-cols-1 md:grid-cols-2 text-xl md:text-2xl mt-5 md:mt-10 gap-3 md:gap-5 sm:text-xl cursor-pointer font-bold border-1 bg-indigo-200 rounded-sm">
+              <div
+                id="links-container"
+                className="p-3 md:p-5 grid grid-cols-1 md:grid-cols-2 text-xl md:text-2xl mt-5 md:mt-10 gap-3 md:gap-5 sm:text-xl cursor-pointer font-bold border-1 bg-indigo-200 rounded-sm"
+              >
                 {linksToShow.map((link, idx) => (
                   <div
                     key={idx}

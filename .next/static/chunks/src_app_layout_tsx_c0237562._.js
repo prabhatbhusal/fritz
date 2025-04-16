@@ -12,9 +12,8 @@
   "static/chunks/node_modules_react-icons_lib_74ccc930._.js",
   "static/chunks/node_modules_@remixicon_react_index_mjs_971ddb18._.js",
   "static/chunks/node_modules_@mdi_js_mdi_0c67d0a0.js",
-  "static/chunks/node_modules_tailwind-merge_dist_bundle-mjs_mjs_b854acb4._.js",
-  "static/chunks/node_modules_f0dd4dfe._.js",
-  "static/chunks/src_ed7504e6._.js"
+  "static/chunks/node_modules_2371c07d._.js",
+  "static/chunks/src_components_ui_32168685._.js"
 ],
     source: "dynamic"
 });
