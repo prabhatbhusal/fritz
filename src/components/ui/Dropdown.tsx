@@ -20,6 +20,7 @@ const DropdownMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<"Residential" | "Commercial" | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [linksToShow, setLinksToShow] = useState<any[]>([]);
 
   // Check if we're in a mobile viewport - use 768px as breakpoint to match md: in Tailwind
   useEffect(() => {
@@ -84,17 +85,33 @@ const DropdownMenu: React.FC = () => {
     },
   ];
 
-  const getCurrentLinks = () => {
-    if (selectedCategory === "Residential") return residentialLinks;
-    if (selectedCategory === "Commercial") return commercialLinks;
-    return allLinks;
-  };
+  // Set initial links on component mount
+  useEffect(() => {
+    setLinksToShow(allLinks);
+  }, []);
+
+  // Update links whenever selectedCategory changes
+  useEffect(() => {
+    if (selectedCategory === "Residential") {
+      setLinksToShow(residentialLinks);
+    } else if (selectedCategory === "Commercial") {
+      setLinksToShow(commercialLinks);
+    } else {
+      setLinksToShow(allLinks);
+    }
+  }, [selectedCategory]);
 
   // Modified to always toggle dropdown on click, regardless of device
   const handleToggleDropdown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsOpen(!isOpen);
+
+    // Reset to show all links when opening the dropdown
+    if (!isOpen) {
+      setSelectedCategory(null);
+      setLinksToShow(allLinks);
+    }
   };
 
   const handleMouseEnter = () => {
@@ -107,6 +124,18 @@ const DropdownMenu: React.FC = () => {
     if (!isMobile) {
       setIsOpen(false);
       setSelectedCategory(null);
+    }
+  };
+
+  // Handle category selection - works the same on mobile and desktop
+  const handleCategorySelect = (category: "Residential" | "Commercial") => {
+    // If we're clicking the same category that's already selected, show all links
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      setLinksToShow(allLinks);
+    } else {
+      setSelectedCategory(category);
+      setLinksToShow(category === "Residential" ? residentialLinks : commercialLinks);
     }
   };
 
@@ -126,6 +155,12 @@ const DropdownMenu: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMobile, isOpen]);
+
+  // Show all services
+  const handleShowAllServices = () => {
+    setSelectedCategory(null);
+    setLinksToShow(allLinks);
+  };
 
   return (
     <div id="dropdown-container" className="relative inline-block text-left">
@@ -157,7 +192,7 @@ const DropdownMenu: React.FC = () => {
                       className={`flex items-center p-5 text-lg sm:text-xl cursor-pointer font-bold border-1 rounded-sm px-5 mt-5 ${
                         selectedCategory === "Residential" ? "bg-indigo-100" : ""
                       }`}
-                      onClick={() => setSelectedCategory("Residential")}
+                      onClick={() => handleCategorySelect("Residential")}
                     >
                       <span className="flex items-center gap-5 rounded p-1">
                         <RiHome3Fill color="gray" />
@@ -170,7 +205,7 @@ const DropdownMenu: React.FC = () => {
                       className={`flex items-center p-5 text-lg sm:text-xl cursor-pointer font-bold border-1 rounded-sm px-5 mt-5 ${
                         selectedCategory === "Commercial" ? "bg-indigo-100" : ""
                       }`}
-                      onClick={() => setSelectedCategory("Commercial")}
+                      onClick={() => handleCategorySelect("Commercial")}
                     >
                       <span className="flex items-center gap-5 rounded p-1">
                         <RiHotelFill className="text-gray" color="gray" />
@@ -182,8 +217,8 @@ const DropdownMenu: React.FC = () => {
               </div>
             </div>
             <div className="w-full md:w-[65%] px-4 md:px-10">
-              <div className="p-3 md:p-5 grid grid-cols-1 md:grid-cols-2 text-xl md:text-2xl mt-5 md:mt-10 gap-3 md:gap-5 sm:text-xl cursor-pointer font-bold border-1 bg-indigo-200 rounded-sm">
-                {getCurrentLinks().map((link, idx) => (
+              <div id="links-container" className="p-3 md:p-5 grid grid-cols-1 md:grid-cols-2 text-xl md:text-2xl mt-5 md:mt-10 gap-3 md:gap-5 sm:text-xl cursor-pointer font-bold border-1 bg-indigo-200 rounded-sm">
+                {linksToShow.map((link, idx) => (
                   <div
                     key={idx}
                     className="hover:text-indigo-500 mt-3 md:mt-5 flex font-bold text-sm md:text-md hover:underline gap-2"
@@ -193,6 +228,16 @@ const DropdownMenu: React.FC = () => {
                   </div>
                 ))}
               </div>
+              {isMobile && selectedCategory && (
+                <div className="mt-3 text-center">
+                  <button
+                    onClick={handleShowAllServices}
+                    className="text-indigo-600 text-sm font-medium hover:underline"
+                  >
+                    Show all services
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="p-4 md:p-10">
