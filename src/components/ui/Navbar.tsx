@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 const Navbar = () => {
   const links=[
-    {name:'Home',url:''},{name:'About',url:''},{name:'Services ',url:''},{name:'Gallery',url:''},{name:'Blogs',url:''},{name:'Contact Us',url:''}
+    {name:'Home',url:'/'},{name:'About',url:'/aboutUs'},{name:'Services ',url:'/services'},{name:'Gallery',url:'/gallery'},{name:'Blogs',url:'/blogs'},{name:'Contact Us',url:'/contactUs'}
 
   ]
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
         <li><Link href={link.url}>{link.name}</Link></li>
         </div>
         <div>
-          <Link href=''></Link>
+          <Link href='/bookService'>Book a Service</Link>
         </div>
         </div>)
       )}
