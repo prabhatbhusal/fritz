@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+
 import Image from "next/image";
 import { PiOvenBold } from "react-icons/pi";
 import { RiGasStationFill, RiHome3Fill, RiHotelLine } from "@remixicon/react";
@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { MdSevereCold } from "react-icons/md";
 
 const page = () => {
-  const [text, setText] = useState("");
+
 
   const links = [
     {
@@ -151,7 +151,7 @@ const page = () => {
               >
                 LOCATE
               </Button>
-              <p>{text}</p>
+              
             </form>
 
             <Accordion type="single" collapsible>

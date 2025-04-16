@@ -114,6 +114,7 @@
 
 @layer theme {
   :root, :host {
+    --color-red-500: oklch(63.7% .237 25.331);
     --color-orange-500: oklch(70.5% .213 47.604);
     --color-orange-600: oklch(64.6% .222 41.116);
     --color-sky-900: oklch(39.1% .09 240.876);
@@ -121,6 +122,7 @@
     --color-indigo-100: oklch(93% .034 272.788);
     --color-indigo-200: oklch(87% .065 274.039);
     --color-indigo-500: oklch(58.5% .233 277.117);
+    --color-indigo-900: oklch(35.9% .144 278.697);
     --color-slate-600: oklch(44.6% .043 257.281);
     --color-slate-900: oklch(20.8% .042 265.755);
     --color-gray-100: oklch(96.7% .003 264.542);
@@ -146,6 +148,8 @@
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-bold: 700;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
     --radius-4xl: 2rem;
     --default-transition-duration: .15s;
     --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
@@ -403,6 +407,22 @@
     top: 100%;
   }
 
+  .right-10 {
+    right: calc(var(--spacing) * 10);
+  }
+
+  .right-20 {
+    right: calc(var(--spacing) * 20);
+  }
+
+  .right-30 {
+    right: calc(var(--spacing) * 30);
+  }
+
+  .right-150 {
+    right: calc(var(--spacing) * 150);
+  }
+
   .left-0 {
     left: calc(var(--spacing) * 0);
   }
@@ -411,8 +431,32 @@
     left: calc(var(--spacing) * 8);
   }
 
+  .left-10 {
+    left: calc(var(--spacing) * 10);
+  }
+
+  .left-20 {
+    left: calc(var(--spacing) * 20);
+  }
+
+  .left-30 {
+    left: calc(var(--spacing) * 30);
+  }
+
   .left-56 {
     left: calc(var(--spacing) * 56);
+  }
+
+  .left-\[-30px\] {
+    left: -30px;
+  }
+
+  .left-\[-50px\] {
+    left: -50px;
+  }
+
+  .left-\[-500px\] {
+    left: -500px;
   }
 
   .isolate {
@@ -435,8 +479,16 @@
     z-index: 50;
   }
 
+  .z-100 {
+    z-index: 100;
+  }
+
   .z-\[1\] {
     z-index: 1;
+  }
+
+  .m-10 {
+    margin: calc(var(--spacing) * 10);
   }
 
   .mx-auto {
@@ -467,12 +519,36 @@
     margin-top: calc(var(--spacing) * 10);
   }
 
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
+  }
+
+  .mr-5 {
+    margin-right: calc(var(--spacing) * 5);
+  }
+
+  .mr-10 {
+    margin-right: calc(var(--spacing) * 10);
+  }
+
+  .mr-20 {
+    margin-right: calc(var(--spacing) * 20);
+  }
+
+  .mr-30 {
+    margin-right: calc(var(--spacing) * 30);
+  }
+
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
 
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
+  }
+
+  .ml-30 {
+    margin-left: calc(var(--spacing) * 30);
   }
 
   .block {
@@ -536,6 +612,14 @@
 
   .h-16 {
     height: calc(var(--spacing) * 16);
+  }
+
+  .h-120 {
+    height: calc(var(--spacing) * 120);
+  }
+
+  .h-150 {
+    height: calc(var(--spacing) * 150);
   }
 
   .h-170 {
@@ -651,6 +735,10 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .flex-col {
     flex-direction: column;
   }
@@ -727,6 +815,14 @@
     border-radius: .25rem;
   }
 
+  .rounded-2xl {
+    border-radius: var(--radius-2xl);
+  }
+
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
+
   .rounded-4xl {
     border-radius: var(--radius-4xl);
   }
@@ -797,6 +893,10 @@
     background-color: var(--color-indigo-500);
   }
 
+  .bg-indigo-900 {
+    background-color: var(--color-indigo-900);
+  }
+
   .bg-orange-500 {
     background-color: var(--color-orange-500);
   }
@@ -807,6 +907,10 @@
 
   .bg-primary {
     background-color: var(--primary);
+  }
+
+  .bg-red-500 {
+    background-color: var(--color-red-500);
   }
 
   .bg-secondary {
@@ -866,6 +970,10 @@
 
   .p-5 {
     padding: calc(var(--spacing) * 5);
+  }
+
+  .p-10 {
+    padding: calc(var(--spacing) * 10);
   }
 
   .px-2 {
@@ -960,6 +1068,26 @@
   .text-xl {
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+
+  .text-\[10px\] {
+    font-size: 10px;
+  }
+
+  .text-\[15px\] {
+    font-size: 15px;
+  }
+
+  .text-\[16px\] {
+    font-size: 16px;
+  }
+
+  .text-\[17px\] {
+    font-size: 17px;
+  }
+
+  .text-\[20px\] {
+    font-size: 20px;
   }
 
   .font-bold {
@@ -1642,6 +1770,12 @@
   @media (width >= 64rem) {
     .lg\:w-\[25\%\] {
       width: 25%;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .lg\:w-\[35\%\] {
+      width: 35%;
     }
   }
 

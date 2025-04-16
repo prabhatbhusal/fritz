@@ -3,11 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import DropdownMenu from "./Dropdown";
 import { RiArrowDownSLine } from "@remixicon/react";
+
 const Navbar = () => {
   const links = [
     { name: "Home", url: "/" },
     { name: "About", url: "/aboutUs" },
-    { name: <div className='flex'><span>Services</span><RiArrowDownSLine /></div>, url: "/services" },
+    { name: <div className='flex'><span><DropdownMenu /></span></div>, url: "#" },
     { name: "Gallery", url: "/gallery" },
     { name: "Blogs", url: "/blogs" },
     { name: "Contact Us", url: "/contactUs" },
@@ -31,7 +32,12 @@ const Navbar = () => {
         }
         </div>
         <div>
-        <Link href="/bookService">Book a Service</Link>
+        <Link
+                  className="mt-4 bg-red-500 text-white px-4 sm:px-6 py-2 rounded-full font-medium hover:bg-orange-600 transition inline-block"
+                  href="/appointment"
+                >
+                  Book an Service
+                </Link>
         </div>
 
       </div>
